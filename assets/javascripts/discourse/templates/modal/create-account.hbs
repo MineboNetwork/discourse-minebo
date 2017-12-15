@@ -1,0 +1,55 @@
+{{#create-account email=accountEmail disabled=submitDisabled action="createAccount"}}
+
+  {{#unless complete}}
+    {{#d-modal-body title="create_account.title"}}
+      {{#unless hasAuthOptions}}
+        {{login-buttons action="externalLogin"}}
+      {{/unless}}
+
+      {{#if showCreateForm}}
+        <div>
+          <form>
+          <table>
+
+          <div style="padding: 15px 15px 45px">
+            <p><strong>1. Connect to our Minecraft server</strong><br>
+            Open Minecraft, click multiplayer then join our server by connecting to:</p>
+            <code>minebo.net</code><br>
+
+            <p><strong>2. Verify your Minecraft username</strong><br>
+            Enter your email address and create a new password by running the following command from any of our servers:</p>
+            <code>/register you@example.com password</code><br>
+
+            <p><strong>3. Confirm your email address</strong><br>
+            Login to your email from the above command and open the link we just sent you.</p>
+          </div>
+
+          </table>
+
+          {{#if userFields}}
+            <div class='user-fields'>
+              {{#each userFields as |f|}}
+                {{user-field field=f.field value=f.value}}
+              {{/each}}
+            </div>
+          {{/if}}
+
+          </form>
+        </div>
+      {{/if}}
+    {{/d-modal-body}}
+
+    {{#if showCreateForm}}
+      <div class="modal-footer">
+        <button class='btn btn-large btn-primary' disabled={{submitDisabled}} {{action "createAccount"}}>{{i18n 'create_account.title'}}</button>
+        {{#conditional-loading-spinner condition=formSubmitted size="small"}}
+          <button class="btn btn-large" id="login-link" {{action "showLogin"}}>
+            {{i18n 'log_in'}}
+          </button>
+        {{/conditional-loading-spinner}}
+
+      <div class='disclaimer'>{{{disclaimerHtml}}}</div>
+      </div>
+    {{/if}}
+  {{/unless}}
+{{/create-account}}
